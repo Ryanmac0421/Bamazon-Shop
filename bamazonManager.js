@@ -1,7 +1,7 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var choices = [];
-const quantity = 10;
+// const quantity = 10;
 var connection = mysql.createConnection({
     host: "localhost",
   
@@ -17,77 +17,85 @@ var connection = mysql.createConnection({
   });
 
 // connect to the mysql server and sql database
-connection.connect(function(err) {
-    if (err) throw err;
-    // run the start function after the connection is made to prompt the user
-    
-    connection.query("SELECT * FROM bamazon_db.products", function (err, result, fields) {
+    connection.connect(function(err) {
         if (err) throw err;
-        for (let x = 0; x < result.length; x++) {
-            const element = result[x];
-            choices.push(`${element.id + "||" + element.product_name+ "||" +"$"+ element.price}`)
-            
-        }
-     
-         start();
-      });
-   
-});
+        // run the start function after the connection is made to prompt the user
+        
+        connection.query("SELECT * FROM bamazon_db.products", function (err, result) {
+            if (err) throw err;
+            for (let x = 0; x < result.length; x++) {
+                const element = result[x];
+                choices.push("Item ID: " + `${element.id + "||" + element.product_name+ "||" +"$"+ element.price}`)
+                
+                
+            }
+            start();
+        })
+             
+    })
+    
+
 
 function start() {
     inquirer
       .prompt({
-        name: "Car Type:",
+        name: "CarType:",
         type: "list",
-        message: "What would you like to buy!?",
-        choices: choices
+        message: "What is the ID of the car you would like to buy!?",
+        choices : choices 
       })
-    .then(function(answer) {
+    .then(function( answer) {
        
+        // console.log(answer.element['Item ID']);
         console.log(answer);
-       
-    })
-
-
-    .then(function(answer) {
-       
-        console.log("How many would you like to buy?");
-
-    })
-
-    // if (condition) {
         
-    // }
+        quantity2(5);
+    })
+  
+};
 
 
 
+function quantity2(answer) {
+    inquirer
+        .prompt({
+        name: "buy",
+        type: "input",
+        message: "How many would you like to buy?",
+        })
+  
+    .then(function(any) {
+     
+        connection.query("UPDATE bamazon_db.products SET ? WHERE ?", 
+
+
+        [{stock_quantity: 5  },{id: 5}],
+
+    function(err,res) {
+            
+        console.log(res);
+        
+    });
+            
+     
+    
+    })    
 }
 
 
-function purchase(answer) {
+
+    // function purchase(answer) {
        
-        if (this.stock_quantity = 0) {
-            console.log("Sorry, we are sold out!");
+    //     if (this.stock_quantity = 0) {
+    //         console.log("Sorry, we are sold out!");
             
-        }
-        console.log("Purchase complete!");
-            stock_quantity --;
-            console.log("We now have "+ stock_quantity + " left!" );
-
-}  
-
-function reject(answer) {
-
-    if (this.stock_quantity = 0) {
-        console.log("Sorry, we are sold out!");
-        
-    }
-
- }
+    //     }
+    //     else {
+    //         console.log("Purchase complete!");
+    //         stock_quantity --;
+    //         console.log("We now have "+ stock_quantity + " left!" );
+            
 
 
-
-// The first should ask them the ID of the product they would like to buy.
-// The second message should ask how many units of the product they would like to buy.
-
-
+    //     }
+    // }   
