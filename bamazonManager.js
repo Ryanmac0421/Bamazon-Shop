@@ -19,6 +19,8 @@ var connection = mysql.createConnection({
 // connect to the mysql server and sql database
     connection.connect(function(err) {
         if (err) throw err;
+        
+        
         // run the start function after the connection is made to prompt the user
         
         connection.query("SELECT * FROM bamazon_db.products", function (err, result) {
@@ -35,7 +37,7 @@ var connection = mysql.createConnection({
     })
     
 
-
+//this is where i ask the first question in the prompt
 function start() {
     inquirer
       .prompt({
@@ -73,29 +75,12 @@ function quantity2(answer) {
 
     function(err,res) {
             
-        console.log(res);
+        
         
     });
             
-     
     
     })    
 }
 
 
-
-    // function purchase(answer) {
-       
-    //     if (this.stock_quantity = 0) {
-    //         console.log("Sorry, we are sold out!");
-            
-    //     }
-    //     else {
-    //         console.log("Purchase complete!");
-    //         stock_quantity --;
-    //         console.log("We now have "+ stock_quantity + " left!" );
-            
-
-
-    //     }
-    // }   
