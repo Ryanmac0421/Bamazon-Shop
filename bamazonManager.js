@@ -32,6 +32,7 @@ var connection = mysql.createConnection({
                 
             }
             start();
+            return;
         })
              
     })
@@ -71,14 +72,16 @@ function quantity2(answer) {
         connection.query("UPDATE bamazon_db.products SET ? WHERE ?", 
 
 
-        [{stock_quantity: 5  },{id: 5}],
+        // [{stock_quantity: 5  },{id: 5}],
 
     function(err,res) {
             
-        
+         
+        console.log(res);
         
     });
             
+     
     
     })    
 }
